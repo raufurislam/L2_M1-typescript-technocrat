@@ -6,7 +6,8 @@ const user: { firstName: string; middleName: string; lastName: string } = {
 };
 
 const user2: {
-  company: "Programming Hero"; // literal type
+  // company: "Programming Hero"; // literal type
+  readonly company: String; // read only type
   firstName: string;
   middleName?: string; // optional type
   lastName: string;
@@ -17,4 +18,7 @@ const user2: {
   lastName: "Nayem",
   isMarried: true,
 };
+
+user2.company = "PH";
+
 console.log(user2);

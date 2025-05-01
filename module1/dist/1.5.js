@@ -6,8 +6,10 @@ var user = {
     lastName: "Nayem",
 };
 var user2 = {
+    company: "Programming Hero",
     firstName: "Raufur",
     lastName: "Nayem",
     isMarried: true,
 };
+user2.company = "PH";
 console.log(user2);
