@@ -22,6 +22,6 @@ console.log(friends);
 var eligibleRollList = [1, 2, 3];
 // tuple --> array --> order -->type of value
 var coordinates = [1, 5];
-var ageName = [50, "Mr. X"];
+var ageName = [50, "Mr. X", true];
 ageName[1] = "Mr. Y";
 console.log(ageName);
