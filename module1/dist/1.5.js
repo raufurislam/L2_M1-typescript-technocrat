@@ -11,5 +11,5 @@ var user2 = {
     lastName: "Nayem",
     isMarried: true,
 };
-user2.company = "PH";
+// user2.company = "PH"; // Cannot assign to 'company' because it is a read-only property.ts(2540)
 console.log(user2);
