@@ -34,12 +34,15 @@ var __assign = (this && this.__assign) || function () {
     var mentorList = __assign(__assign({}, mentors1), mentors2);
     console.log(mentorList);
     //   Learn Rest Operator
+    var greatFriends2 = function (friend1, friend2, friend3) {
+        console.log("Hi! ".concat(friend1, ", ").concat(friend2, ", ").concat(friend3));
+    };
+    greatFriends2("abc", "xyz", "hdbf");
     var greatFriends = function () {
         var friends = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             friends[_i] = arguments[_i];
         }
-        // console.log(`hi ${friend1} ${friend2} ${friend3}`);
         friends.forEach(function (friend) { return console.log("Hi ".concat(friend)); });
     };
     greatFriends("Abul", "gabul", "dabul", "ubul");

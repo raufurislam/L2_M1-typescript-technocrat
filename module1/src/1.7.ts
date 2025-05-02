@@ -30,8 +30,12 @@
   console.log(mentorList);
 
   //   Learn Rest Operator
+  const greatFriends2 = (friend1: string, friend2: string, friend3: string) => {
+    console.log(`Hi! ${friend1}, ${friend2}, ${friend3}`);
+  };
+  greatFriends2("abc", "xyz", "hdbf");
+
   const greatFriends = (...friends: string[]) => {
-    // console.log(`hi ${friend1} ${friend2} ${friend3}`);
     friends.forEach((friend: String) => console.log(`Hi ${friend}`));
   };
   greatFriends("Abul", "gabul", "dabul", "ubul");
