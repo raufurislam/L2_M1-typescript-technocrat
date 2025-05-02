@@ -24,7 +24,6 @@
     console.log(student3);
     var userName = "String Alias"; // string alias
     var isAdmin_1 = true; // bolean alias
-    //   const add = (num1: number, num2: number): number => num1 + num2;
     var add_1 = function (num1, num2) { return num1 + num2; };
     console.log(add_1(5, 10));
     //
