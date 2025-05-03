@@ -1,6 +1,80 @@
-# 📘 TypeScript Learning Journey
+# 📘 TypeScript Technocrat
 
 Welcome to my TypeScript learning repository! This journey includes examples and notes covering key TypeScript concepts from basics to more advanced topics.
+
+---
+
+## Module-1 Explore Basic Type of Typescript
+
+## ✅ 1.0 - TypeScript Setup & Environment
+
+### ⚙️ Install Node.js and TypeScript
+
+- Follow the [Node.js documentation](https://nodejs.org) to install Node on Windows.
+- Check available Node versions:
+
+  ```sh
+  fnm list
+
+
+  ```
+
+- To change Node version:
+
+  ```sh
+  fnm use <version>
+  ```
+
+- Set default version:
+
+  ```sh
+  fnm use <version> --use-once | Out-String | Invoke-Expression
+  ```
+
+### ⚙️ Install TypeScript Globally
+
+```sh
+npm install -g typescript
+```
+
+---
+
+## ▶️ Run TypeScript Files
+
+### 🛠 Initialize TypeScript in a Project
+
+```sh
+tsc --init
+```
+
+This creates a `tsconfig.json` file where you can configure:
+
+- `target`: Set the JavaScript version (e.g., `"es6"`)
+- `rootDir`: Folder containing the `.ts` files (e.g., `"./src"`)
+- `outDir`: Output directory for compiled files (e.g., `"./dist"`)
+
+### 🧪 Compile TypeScript Files
+
+- Compile once:
+
+  ```sh
+  tsc
+  ```
+
+- Watch mode (auto-compile on changes):
+
+  ```sh
+  tsc -w
+  ```
+
+### ⚡ Run TypeScript Directly (Dev Mode)
+
+Using `ts-node-dev`:
+
+```sh
+npm install ts-node-dev
+ts-node-dev --respawn --transpile-only src/index.ts
+```
 
 ---
 
@@ -73,7 +147,7 @@ const newArray = arr.map((element: number): number => element * element);
 
 ### 🔹 `this` Context in Object Methods
 
-Avoid arrow functions for object methods where `this` is required.
+Avoid arrow functions in object methods if you need the `this` keyword.
 
 ---
 
@@ -103,6 +177,51 @@ const {
 } = user;
 
 const [, , bestFriend, ...rest] = friendsArray;
+```
+
+---
+
+## ✅ 1.8 - Tuples & Enums
+
+### 🔹 Tuples
+
+Used to define a fixed-length, ordered array with specific types.
+
+```ts
+const userInfo: [string, number, boolean] = ["Alice", 25, true];
+```
+
+You can also use them in functions:
+
+```ts
+function useState(): [number, (val: number) => void] {
+  return [0, (val) => console.log(val)];
+}
+```
+
+### 🔹 Enums
+
+Used to define a set of named constants.
+
+```ts
+enum Status {
+  Success = "SUCCESS",
+  Failure = "FAILURE",
+  Pending = "PENDING",
+}
+
+const currentStatus: Status = Status.Success;
+```
+
+Enums can also be numeric:
+
+```ts
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right,
+}
 ```
 
 ---
