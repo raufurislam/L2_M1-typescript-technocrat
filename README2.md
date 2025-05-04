@@ -1,116 +1,52 @@
-## ✅ 2.1 - Type Assertion
+## ✅ 2.3 - Generics
 
-### 🔹 Basic Type Assertion
+### 🔹 Generic Type with Arrays
 
 ```ts
-let anything: any;
-anything = "Next Level Web Development";
-anything = 222;
-anything = true;
-console.log(anything);
+type GenericArrayN = Array<number>;
+type GenericArrayS = Array<string>;
+type GenericArrayB = Array<boolean>;
 
-// Asserting type manually (though this line alone has no effect)
-anything as string;
+// Using built-in generic syntax
+const rollNumbers: Array<number> = [1, 2, 3];
+const mentors: Array<string> = ["Mr. X", "Mr. Y", "Mr. Z"];
+const boolArray: Array<boolean> = [true, false, true];
+
+// Using custom generic aliases
+const rollNumbersG: GenericArrayN = [1, 2, 3];
+const mentorsG: GenericArrayS = ["Mr. X", "Mr. Y", "Mr. Z"];
+const boolArrayG: GenericArrayB = [true, false, true];
 ```
 
-### 🔹 Function Example with Assertion
+### 🔹 Dynamic Generic Type
 
 ```ts
-const kgToGm = (value: string | number): string | number | undefined => {
-  if (typeof value === "string") {
-    const convertedValue = parseFloat(value) * 1000;
-    return `The converted value is ${convertedValue}`;
-  }
-  if (typeof value === "number") {
-    return value * 1000;
-  }
-};
+type GenericArray<T> = Array<T>;
 
-console.log(kgToGm(20));
+const rollNumberD: GenericArray<number> = [1, 2, 3];
+const mentorsD: GenericArray<string> = ["Mr. X", "Mr. Y", "Mr. Z"];
+const boolArrayD: GenericArray<boolean> = [true, false, true];
 ```
 
-### 🔹 Using Type Assertion on Function Return
+### 🔹 Generic Array of Objects
 
 ```ts
-const result1 = kgToGm(1000) as number;
-console.log({ result1 });
-
-const result2 = kgToGm("2000") as string;
-console.log({ result2 });
+const user: GenericArray<{ name: string; age: number }> = [
+  { name: "Nayem", age: 26 },
+  { name: "Islam", age: 27 },
+];
 ```
 
-### 🔹 Assertion with `unknown` or `any` in Error Handling
+### 🔹 Generic Tuple
 
 ```ts
-type CustomError = {
-  message: string;
-};
+type GenericTuple<X, Y> = [X, Y];
 
-try {
-  // some error throwing code
-} catch (error) {
-  console.log((error as CustomError).message);
-}
-```
+const manusher: GenericTuple<string, string> = ["Mr X", "Mst Y"];
+const userWithID: GenericTuple<number, { name: string; email: string }> = [
+  1234,
+  { name: "Nayem", email: "nayem@gmail.com" },
+];
 
----
-
-## ✅ 2.2 - Interface vs Type Alias
-
-### 🔹 Type Alias
-
-```ts
-type rollNumber = number;
-
-type User1 = {
-  name: string;
-  age: number;
-};
-
-type UserWithRole1 = User1 & {
-  role?: string;
-};
-```
-
-### 🔹 Interface
-
-```ts
-interface User2 {
-  name: string;
-  age: number;
-}
-
-interface UserWithRole2 extends User2 {
-  role: string;
-}
-
-const user1: UserWithRole2 = {
-  name: "Nayem",
-  age: 26,
-  role: "Bekar",
-};
-```
-
-### 🔹 Array with Type and Interface
-
-```ts
-type Roll1 = number[];
-const rollNumber1: Roll1 = [1, 2, 3];
-
-interface Roll2 {
-  [index: number]: number;
-}
-const rollNumber2: Roll2 = [1, 2, 3];
-```
-
-### 🔹 Function Type with Alias and Interface
-
-```ts
-type Add1 = (num1: number, num2: number) => number;
-const add1: Add1 = (num1, num2) => num1 + num2;
-
-interface Add2 {
-  (num1: number, num2: number): number;
-}
-const add2: Add2 = (num1, num2) => num1 + num2;
+console.log({ userWithID });
 ```
