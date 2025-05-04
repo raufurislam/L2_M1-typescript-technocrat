@@ -1,52 +1,139 @@
-## ✅ 2.3 - Generics
+## ✅ 2.4 - Generic Interface
 
-### 🔹 Generic Type with Arrays
+### 🔹 Creating a Generic Interface
 
 ```ts
-type GenericArrayN = Array<number>;
-type GenericArrayS = Array<string>;
-type GenericArrayB = Array<boolean>;
-
-// Using built-in generic syntax
-const rollNumbers: Array<number> = [1, 2, 3];
-const mentors: Array<string> = ["Mr. X", "Mr. Y", "Mr. Z"];
-const boolArray: Array<boolean> = [true, false, true];
-
-// Using custom generic aliases
-const rollNumbersG: GenericArrayN = [1, 2, 3];
-const mentorsG: GenericArrayS = ["Mr. X", "Mr. Y", "Mr. Z"];
-const boolArrayG: GenericArrayB = [true, false, true];
+interface Developer<T, X = null> {
+  name: string;
+  computer: {
+    brand: string;
+    model: string;
+    releaseYear: number;
+  };
+  smartWatch: T;
+  bike: X;
+}
 ```
 
-### 🔹 Dynamic Generic Type
+### 🔹 Using Generic Types in Interface
 
 ```ts
-type GenericArray<T> = Array<T>;
+type Nai = {
+  brand: string;
+  model: string;
+  display: string;
+};
 
-const rollNumberD: GenericArray<number> = [1, 2, 3];
-const mentorsD: GenericArray<string> = ["Mr. X", "Mr. Y", "Mr. Z"];
-const boolArrayD: GenericArray<boolean> = [true, false, true];
+const poorDeveloper: Developer<Nai> = {
+  name: "Nayem",
+  computer: {
+    brand: "Hp",
+    model: "i3 4th gen",
+    releaseYear: 2015,
+  },
+  smartWatch: {
+    brand: "nai",
+    model: "nai 123",
+    display: "OLED",
+  },
+  bike: null,
+};
 ```
 
-### 🔹 Generic Array of Objects
+### 🔹 Passing Two Generic Types
 
 ```ts
-const user: GenericArray<{ name: string; age: number }> = [
-  { name: "Nayem", age: 26 },
-  { name: "Islam", age: 27 },
-];
+interface AppleWatch {
+  brand: string;
+  model: string;
+  heartTrack: boolean;
+  sleepTrack: boolean;
+}
+
+interface YamahaBike {
+  model: string;
+  engineCapacity: string;
+}
+
+const richDeveloper: Developer<AppleWatch, YamahaBike> = {
+  name: "Rich Dev",
+  computer: {
+    brand: "Hp",
+    model: "i7 13th gen",
+    releaseYear: 2024,
+  },
+  smartWatch: {
+    brand: "Apple",
+    model: "watch 2 pro",
+    heartTrack: true,
+    sleepTrack: true,
+  },
+  bike: {
+    model: "Yamaha",
+    engineCapacity: "150CC",
+  },
+};
 ```
 
-### 🔹 Generic Tuple
+---
+
+## ✅ 2.5 - Generic Functions
+
+### 🔹 Basic Function with Generic
 
 ```ts
-type GenericTuple<X, Y> = [X, Y];
+const createArray = (param: string): string[] => {
+  return [param];
+};
 
-const manusher: GenericTuple<string, string> = ["Mr X", "Mst Y"];
-const userWithID: GenericTuple<number, { name: string; email: string }> = [
-  1234,
-  { name: "Nayem", email: "nayem@gmail.com" },
-];
+const createArrayWithGeneric = <T>(param: T): T[] => {
+  return [param];
+};
 
-console.log({ userWithID });
+const res1 = createArray("Bangladesh");
+const resGeneric = createArrayWithGeneric(true);
+
+type User = { id: number; name: string };
+const resGenericObj = createArrayWithGeneric<User>({
+  id: 155415,
+  name: "Mr. X",
+});
+```
+
+### 🔹 Tuple with Generic
+
+```ts
+const createArrayWithTuple = <T, Q>(param1: T, param2: Q): [T, Q] => {
+  return [param1, param2];
+};
+
+const resT = createArrayWithTuple("Bangladesh", 5545);
+const resGenericT = createArrayWithTuple("Bangladesh", {
+  name: "Asia",
+  planet: "earth",
+});
+```
+
+### 🔹 Add Property with Generic Function
+
+```ts
+const addCourseToStudent = <T>(student: T) => {
+  const course = "Next Level Web Development";
+  return {
+    ...student,
+    course,
+  };
+};
+
+const student1 = addCourseToStudent({
+  name: "Mr x",
+  email: "x@gmail.com",
+  devType: "Next level web developer",
+});
+
+const student2 = addCourseToStudent({
+  name: "Mr y",
+  email: "y@gmail.com",
+  hasWatch: "Apple Watch",
+});
 ```
