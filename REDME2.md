@@ -1,117 +1,200 @@
-Absolutely! Here's the **updated and redesigned `README.md`** with the handwritten notes from your image added **above section 1.4** under a new section called **"1.0 - TypeScript Setup & Environment"**.
+## ✅ 1.6 - Functions
 
----
-
-# 📘 TypeScript Learning Journey
-
-Welcome to my TypeScript learning repository! This journey includes examples and notes covering key TypeScript concepts from basics to more advanced topics.
-
----
-
-## ✅ 1.0 - TypeScript Setup & Environment
-
-### ⚙️ Install Node.js and TypeScript
-
-- Follow the [Node.js documentation](https://nodejs.org) to install Node on Windows.
-- Check available Node versions:
-
-  ```sh
-  nfm list
-
-
-  ```
-
-- To change Node version:
-
-  ```sh
-  nvm use <version>
-  ```
-
-- Set default version:
-
-  ```sh
-  nvm use <version> --use-once | Out-String | Invoke-Expression
-  ```
-
-### ⚙️ Install TypeScript Globally
-
-```sh
-npm install -g typescript
-```
-
----
-
-## ▶️ Run TypeScript Files
-
-### 🛠 Initialize TypeScript in a Project
-
-```sh
-tsc --init
-```
-
-This creates a `tsconfig.json` file where you can configure:
-
-- `target`: Set the JavaScript version (e.g., `"es6"`)
-- `rootDir`: Folder containing the `.ts` files (e.g., `"./src"`)
-- `outDir`: Output directory for compiled files (e.g., `"./dist"`)
-
-### 🧪 Compile TypeScript Files
-
-- Compile once:
-
-  ```sh
-  tsc
-  ```
-
-- Watch mode (auto-compile on changes):
-
-  ```sh
-  tsc -w
-  ```
-
-### ⚡ Run TypeScript Directly (Dev Mode)
-
-Using `ts-node-dev`:
-
-```sh
-npm install ts-node-dev
-ts-node-dev --respawn --transpile-only src/index.ts
-```
-
----
-
-## ✅ 1.4 - Basic Data Types
-
-### 🔹 Primitive Types
+### 🔹 Function Declarations
 
 ```ts
-let firstName: string = "Nayem";
-let roll: number = 123;
-let isAdmin: boolean = true;
+function add(num1: number, num2: number = 10): number {
+  return num1 + num2;
+}
 ```
 
-### 🔹 Special Types
+### 🔹 Arrow Functions
 
 ```ts
-let d: any;
-d = 123; // avoid using 'any' unless absolutely necessary
+const addArrow = (num1: number, num2: number = 20): number => num1 + num2;
 ```
 
-### 🔹 Non-Primitive Types
+### 🔹 Callback Functions
 
 ```ts
-let friends: string[] = ["Siam", "Saifullah"];
-let coordinates: [number, number] = [1, 5];
-let ageName: [number, string, boolean] = [50, "Mr. X", true];
+const newArray = arr.map((element: number): number => element * element);
+```
+
+### 🔹 `this` Context in Object Methods
+
+Avoid arrow functions in object methods if you need the `this` keyword.
+
+---
+
+## ✅ 1.7 - Spread, Rest & Destructuring
+
+### 🔹 Spread Operator
+
+```ts
+const newArr = [...arr1, ...arr2];
+const newObj = { ...obj1, ...obj2 };
+```
+
+### 🔹 Rest Operator
+
+```ts
+const greet = (...friends: string[]) => {
+  console.log(friends);
+};
+```
+
+### 🔹 Destructuring
+
+```ts
+const {
+  contactNo,
+  name: { middleName },
+} = user;
+
+const [, , bestFriend, ...rest] = friendsArray;
 ```
 
 ---
 
-_(The rest of the README content continues from here as previously formatted: Object Types, Functions, Spread/Rest, Type Alias, etc.)_
+## ✅ 1.8 - Tuples & Enums
 
+### 🔹 Tuples
+
+Used to define a fixed-length, ordered array with specific types.
+
+```ts
+const userInfo: [string, number, boolean] = ["Alice", 25, true];
+```
+
+You can also use them in functions:
+
+```ts
+function useState(): [number, (val: number) => void] {
+  return [0, (val) => console.log(val)];
+}
+```
+
+### 🔹 Enums
+
+Used to define a set of named constants.
+
+```ts
+enum Status {
+  Success = "SUCCESS",
+  Failure = "FAILURE",
+  Pending = "PENDING",
+}
+
+const currentStatus: Status = Status.Success;
+```
+
+Enums can also be numeric:
+
+```ts
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right,
+}
 ```
 
 ---
 
-Would you like me to deliver the full final `README.md` as a downloadable file too?
+## ✅ 1.9 - Type Alias
+
+### 🔹 Custom Type Example
+
+```ts
+type Student = {
+  name: string;
+  age: number;
+  gender: string;
+  contactNo?: string;
+  address: string;
+};
+```
+
+### 🔹 Primitive & Function Aliases
+
+```ts
+type UserName = string;
+type IsAdmin = boolean;
+type Add = (num1: number, num2: number) => number;
+```
+
+---
+
+## ✅ 1.10 - Union & Intersection Types
+
+### 🔹 Union Types
+
+```ts
+type Role = "juniorDeveloper" | "expertDeveloper";
+```
+
+### 🔹 Intersection Types
+
+```ts
+type Fullstack = Frontend & Backend;
+```
+
+### 🔹 String Literal Types
+
+Used to restrict a type to a specific set of string values.
+
+---
+
+## ✅ 1.11 - Control Flow Operators
+
+### 🔹 Ternary Operator
+
+```ts
+const result = age >= 18 ? "Adult" : "Not Adult";
+```
+
+### 🔹 Nullish Coalescing (`??`)
+
+```ts
+const name = input ?? "Guest";
+```
+
+### 🔹 Optional Chaining (`?.`)
+
+```ts
+const permanentAddress = user?.address?.permanentAddress ?? "N/A";
+```
+
+---
+
+## ✅ 1.12 - Nullable, Unknown & Never Types
+
+### 🔹 Nullable
+
+```ts
+const searchName = (value: string | null) => {
+  if (value) console.log("Searching");
+  else console.log("Nothing to search");
+};
+```
+
+### 🔹 Unknown
+
+```ts
+const getSpeedInMeterPerSecond = (value: unknown) => {
+  if (typeof value === "number") {
+    console.log((value * 1000) / 3600);
+  } else if (typeof value === "string") {
+    const [num] = value.split(" ");
+    console.log((parseFloat(num) * 1000) / 3600);
+  }
+};
+```
+
+### 🔹 Never
+
+```ts
+const throwError = (msg: string): never => {
+  throw new Error(msg);
+};
 ```
