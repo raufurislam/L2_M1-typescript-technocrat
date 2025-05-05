@@ -1,139 +1,148 @@
-## ✅ 2.4 - Generic Interface
-
-### 🔹 Creating a Generic Interface
+### ✅ 2.6 — Generic Constraint
 
 ```ts
-interface Developer<T, X = null> {
-  name: string;
-  computer: {
-    brand: string;
-    model: string;
-    releaseYear: number;
-  };
-  smartWatch: T;
-  bike: X;
-}
-```
-
-### 🔹 Using Generic Types in Interface
-
-```ts
-type Nai = {
-  brand: string;
-  model: string;
-  display: string;
+const addCourseToStudent = <
+  T extends { id: number; name: string; email: string }
+>(
+  student: T
+) => {
+  const course = "Next Level Web Development";
+  return { ...student, course };
 };
 
-const poorDeveloper: Developer<Nai> = {
-  name: "Nayem",
-  computer: {
-    brand: "Hp",
-    model: "i3 4th gen",
-    releaseYear: 2015,
-  },
-  smartWatch: {
-    brand: "nai",
-    model: "nai 123",
-    display: "OLED",
-  },
-  bike: null,
-};
+const student = addCourseToStudent({
+  id: 123,
+  name: "Mr. X",
+  email: "x@gmail.com",
+  devType: "NLWD",
+});
 ```
 
-### 🔹 Passing Two Generic Types
+🧠 **Note**:
 
-```ts
-interface AppleWatch {
-  brand: string;
-  model: string;
-  heartTrack: boolean;
-  sleepTrack: boolean;
-}
-
-interface YamahaBike {
-  model: string;
-  engineCapacity: string;
-}
-
-const richDeveloper: Developer<AppleWatch, YamahaBike> = {
-  name: "Rich Dev",
-  computer: {
-    brand: "Hp",
-    model: "i7 13th gen",
-    releaseYear: 2024,
-  },
-  smartWatch: {
-    brand: "Apple",
-    model: "watch 2 pro",
-    heartTrack: true,
-    sleepTrack: true,
-  },
-  bike: {
-    model: "Yamaha",
-    engineCapacity: "150CC",
-  },
-};
-```
+- Use `extends { ... }` to **restrict** generic type `T`.
+- Ensures only objects with required keys are accepted.
 
 ---
 
-## ✅ 2.5 - Generic Functions
-
-### 🔹 Basic Function with Generic
+### ✅ 2.7 — `keyof` with Generics
 
 ```ts
-const createArray = (param: string): string[] => {
-  return [param];
+type Vehicle = { bike: string; car: string; ship: string };
+type Owner = keyof Vehicle; // "bike" | "car" | "ship"
+
+const getPropertyByValue = <X, Y extends keyof X>(obj: X, key: Y) => {
+  return obj[key];
 };
 
-const createArrayWithGeneric = <T>(param: T): T[] => {
-  return [param];
+const car = { model: "Toyota", year: 2020 };
+const result = getPropertyByValue(car, "year");
+```
+
+🧠 **Note**:
+
+- `keyof` gets the union of keys.
+- `Y extends keyof X` allows accessing a valid property.
+
+---
+
+### ✅ 2.8 — Promise (Generic)
+
+```ts
+type Something = { something: string };
+
+const createPromise = (): Promise<Something> => {
+  return new Promise((resolve, reject) => {
+    const data: Something = { something: "something" };
+    data ? resolve(data) : reject("Failed");
+  });
 };
 
-const res1 = createArray("Bangladesh");
-const resGeneric = createArrayWithGeneric(true);
+const showData = async (): Promise<Something> => {
+  const data = await createPromise();
+  return data;
+};
+```
 
-type User = { id: number; name: string };
-const resGenericObj = createArrayWithGeneric<User>({
-  id: 155415,
+🧠 **Note**:
+
+- Generic Promise: `Promise<T>`
+- Use `async/await` to handle data and return it.
+
+---
+
+### ✅ 2.9 — Conditional Type
+
+```ts
+type Sheikh = { bike: string; car: string; ship: string; plane: string };
+
+type CheckVehicle<T> = T extends keyof Sheikh ? true : false;
+
+type hasBike = CheckVehicle<"bike">; // true
+type hasTractor = CheckVehicle<"tractor">; // false
+```
+
+🧠 **Note**:
+
+- `T extends U ? X : Y` is conditional type.
+- Great for checking existence in types.
+
+---
+
+### ✅ 2.10 — Mapped Type
+
+```ts
+type AreaNumber = { height: number; width: number };
+
+type AreaString<T> = {
+  [key in keyof T]: T[key];
+};
+
+const area: AreaString<{ height: string; width: number }> = {
+  height: "100",
+  width: 50,
+};
+```
+
+🧠 **Note**:
+
+- `[key in keyof T]` loops through keys to create a new type.
+- Can transform values or keep same.
+
+---
+
+### ✅ 2.11 — Utility Types
+
+```ts
+type Person = {
+  name: string;
+  age: number;
+  contactNo: string;
+  email?: string;
+};
+
+type NameAge = Pick<Person, "name" | "age">;
+type ContactInfo = Omit<Person, "name" | "age">;
+type PersonRequired = Required<Person>;
+type PersonPartial = Partial<Person>;
+type PersonReadonly = Readonly<Person>;
+
+const person: PersonReadonly = {
   name: "Mr. X",
-});
-```
-
-### 🔹 Tuple with Generic
-
-```ts
-const createArrayWithTuple = <T, Q>(param1: T, param2: Q): [T, Q] => {
-  return [param1, param2];
+  age: 30,
+  contactNo: "01234",
 };
 
-const resT = createArrayWithTuple("Bangladesh", 5545);
-const resGenericT = createArrayWithTuple("Bangladesh", {
-  name: "Asia",
-  planet: "earth",
-});
+// Record
+type MyObj = Record<string, string>;
+const obj: MyObj = { a: "abc", b: "def" };
 ```
 
-### 🔹 Add Property with Generic Function
+🧠 **Note**:
 
-```ts
-const addCourseToStudent = <T>(student: T) => {
-  const course = "Next Level Web Development";
-  return {
-    ...student,
-    course,
-  };
-};
-
-const student1 = addCourseToStudent({
-  name: "Mr x",
-  email: "x@gmail.com",
-  devType: "Next level web developer",
-});
-
-const student2 = addCourseToStudent({
-  name: "Mr y",
-  email: "y@gmail.com",
-  hasWatch: "Apple Watch",
-});
-```
+- `Pick`: Keep only selected keys.
+- `Omit`: Exclude selected keys.
+- `Required`: Make all fields required.
+- `Partial`: Make all fields optional.
+- `Readonly`: Make fields immutable.
+- `Record<K, T>`: Map key type `K` to value type `T`.
