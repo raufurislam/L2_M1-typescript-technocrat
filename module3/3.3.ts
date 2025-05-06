@@ -17,7 +17,7 @@
   console.log({ result1 });
   console.log({ result2 });
 
-  //   in guard
+  //   in guard (works only object)
   type NormalUser = { name: string };
 
   type AdminUser = { name: string; role: string };
