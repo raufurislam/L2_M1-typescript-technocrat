@@ -1,6 +1,6 @@
 {
   // oop inheritance
-  class Parent {
+  class Person {
     name: string;
     age: number;
     address: string;
@@ -16,7 +16,7 @@
     }
   }
 
-  class Student extends Parent {
+  class Student extends Person {
     constructor(name: string, age: number, address: string) {
       super(name, age, address);
     }
@@ -26,7 +26,7 @@
 
   student1.getSleep(8);
 
-  class Teacher extends Parent {
+  class Teacher extends Person {
     designation: string;
 
     constructor(
