@@ -1,148 +1,178 @@
-### ✅ 2.6 — Generic Constraint
+## Module 3: Object Oriented typescript
+
+## 🔹 Section 3.1 – Class & Object
+
+**Concept:** Define blueprints (class) to create objects with properties and methods.
 
 ```ts
-const addCourseToStudent = <
-  T extends { id: number; name: string; email: string }
->(
-  student: T
-) => {
-  const course = "Next Level Web Development";
-  return { ...student, course };
-};
-
-const student = addCourseToStudent({
-  id: 123,
-  name: "Mr. X",
-  email: "x@gmail.com",
-  devType: "NLWD",
-});
+class Animal {
+  constructor(public name: string, public sound: string) {}
+  makeSound() {
+    console.log(`${this.name} says ${this.sound}`);
+  }
+}
+const dog = new Animal("Dog", "Woof");
+dog.makeSound(); // Dog says Woof
 ```
-
-🧠 **Note**:
-
-- Use `extends { ... }` to **restrict** generic type `T`.
-- Ensures only objects with required keys are accepted.
 
 ---
 
-### ✅ 2.7 — `keyof` with Generics
+## 🔹 Section 3.2 – Inheritance
+
+**Concept:** A child class inherits properties and methods from a parent class.
 
 ```ts
-type Vehicle = { bike: string; car: string; ship: string };
-type Owner = keyof Vehicle; // "bike" | "car" | "ship"
-
-const getPropertyByValue = <X, Y extends keyof X>(obj: X, key: Y) => {
-  return obj[key];
-};
-
-const car = { model: "Toyota", year: 2020 };
-const result = getPropertyByValue(car, "year");
+class Person {
+  constructor(public name: string) {}
+}
+class Student extends Person {
+  constructor(name: string, public grade: string) {
+    super(name);
+  }
+}
+const student = new Student("John", "A");
+console.log(student.name); // John
 ```
-
-🧠 **Note**:
-
-- `keyof` gets the union of keys.
-- `Y extends keyof X` allows accessing a valid property.
 
 ---
 
-### ✅ 2.8 — Promise (Generic)
+## 🔹 Section 3.3 – Type Guards
+
+**Concept:** Narrow down types in union using `typeof` or `in`.
 
 ```ts
-type Something = { something: string };
-
-const createPromise = (): Promise<Something> => {
-  return new Promise((resolve, reject) => {
-    const data: Something = { something: "something" };
-    data ? resolve(data) : reject("Failed");
-  });
-};
-
-const showData = async (): Promise<Something> => {
-  const data = await createPromise();
-  return data;
-};
+function printValue(value: string | number) {
+  if (typeof value === "string") console.log("It is a string");
+  else console.log("It is a number");
+}
+printValue(5); // It is a number
 ```
-
-🧠 **Note**:
-
-- Generic Promise: `Promise<T>`
-- Use `async/await` to handle data and return it.
 
 ---
 
-### ✅ 2.9 — Conditional Type
+## 🔹 Section 3.4 – `instanceof` Guard
+
+**Concept:** Use `instanceof` to check object class types.
 
 ```ts
-type Sheikh = { bike: string; car: string; ship: string; plane: string };
-
-type CheckVehicle<T> = T extends keyof Sheikh ? true : false;
-
-type hasBike = CheckVehicle<"bike">; // true
-type hasTractor = CheckVehicle<"tractor">; // false
+class Dog {
+  bark() {
+    console.log("Woof");
+  }
+}
+const pet = new Dog();
+if (pet instanceof Dog) pet.bark(); // Woof
 ```
-
-🧠 **Note**:
-
-- `T extends U ? X : Y` is conditional type.
-- Great for checking existence in types.
 
 ---
 
-### ✅ 2.10 — Mapped Type
+## 🔹 Section 3.5 – Access Modifiers
+
+**Concept:** Control access to properties using `public`, `private`, `protected`.
 
 ```ts
-type AreaNumber = { height: number; width: number };
-
-type AreaString<T> = {
-  [key in keyof T]: T[key];
-};
-
-const area: AreaString<{ height: string; width: number }> = {
-  height: "100",
-  width: 50,
-};
+class Account {
+  private balance = 1000;
+  getBalance() {
+    return this.balance;
+  }
+}
+const acc = new Account();
+console.log(acc.getBalance()); // 1000
 ```
-
-🧠 **Note**:
-
-- `[key in keyof T]` loops through keys to create a new type.
-- Can transform values or keep same.
 
 ---
 
-### ✅ 2.11 — Utility Types
+## 🔹 Section 3.6 – Getter & Setter
+
+**Concept:** Use `get` and `set` to safely access or modify private properties.
 
 ```ts
-type Person = {
-  name: string;
-  age: number;
-  contactNo: string;
-  email?: string;
-};
-
-type NameAge = Pick<Person, "name" | "age">;
-type ContactInfo = Omit<Person, "name" | "age">;
-type PersonRequired = Required<Person>;
-type PersonPartial = Partial<Person>;
-type PersonReadonly = Readonly<Person>;
-
-const person: PersonReadonly = {
-  name: "Mr. X",
-  age: 30,
-  contactNo: "01234",
-};
-
-// Record
-type MyObj = Record<string, string>;
-const obj: MyObj = { a: "abc", b: "def" };
+class Wallet {
+  private _amount = 0;
+  get amount() {
+    return this._amount;
+  }
+  set amount(value: number) {
+    this._amount = value;
+  }
+}
+const w = new Wallet();
+w.amount = 500;
+console.log(w.amount); // 500
 ```
 
-🧠 **Note**:
+---
 
-- `Pick`: Keep only selected keys.
-- `Omit`: Exclude selected keys.
-- `Required`: Make all fields required.
-- `Partial`: Make all fields optional.
-- `Readonly`: Make fields immutable.
-- `Record<K, T>`: Map key type `K` to value type `T`.
+## 🔹 Section 3.7 – Static Properties & Methods
+
+**Concept:** Belongs to the class, not instances.
+
+```ts
+class Counter {
+  static count = 0;
+  static increment() {
+    this.count++;
+  }
+}
+Counter.increment();
+console.log(Counter.count); // 1
+```
+
+---
+
+## 🔹 Section 3.8 – Polymorphism
+
+**Concept:** Same method behaves differently across subclasses.
+
+```ts
+class Person {
+  getSleep() {
+    console.log("8 hours");
+  }
+}
+class Student extends Person {
+  getSleep() {
+    console.log("6 hours");
+  }
+}
+const s = new Student();
+s.getSleep(); // 6 hours
+```
+
+---
+
+## 🔹 Section 3.9 – Abstraction
+
+**Concept:** Hide complex details using `interface` or `abstract class`.
+
+```ts
+interface Vehicle {
+  start(): void;
+}
+class Car implements Vehicle {
+  start() {
+    console.log("Car started");
+  }
+}
+new Car().start(); // Car started
+```
+
+---
+
+## 🔹 Section 3.10 – Encapsulation
+
+**Concept:** Protect internal data using access modifiers.
+
+```ts
+class Secret {
+  private key = "abc123";
+  revealKey() {
+    return this.key;
+  }
+}
+const s = new Secret();
+console.log(s.revealKey()); // abc123
+```
+
+---
