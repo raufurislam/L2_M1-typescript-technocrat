@@ -68,7 +68,7 @@
     console.log(param.getArea());
   };
 
-  const shape1 = new Shape(0);
+  const shape1 = new Shape();
   const shape2 = new Circle(10);
   const shape3 = new Rectangle(10, 20);
 
