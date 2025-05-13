@@ -1,0 +1,15 @@
+{
+  "name": "typescipt-technocrat",
+  "version": "1.0.0",
+  "description": "Welcome to my TypeScript learning repository! This journey includes examples and notes covering key TypeScript concepts from basics to more advanced topics.",
+  "main": "test2.js",
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+      "dev" : "ts-node-dev --respawn --transpile-only ./src/main.ts"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
